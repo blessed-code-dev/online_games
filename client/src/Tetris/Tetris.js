@@ -1,13 +1,13 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, { useRef, useState} from "react";
 import "./Tetris.css"
 import TetrisField from "../TetrisField/TetrisField";
 import {Transition} from "react-transition-group";
 
 export default (props) => {
     const [toggle, setToggle] = useState(true)
-    const [toggle2, setToggle2] = useState(true)
+    const [temp, rerender] = useState(true) //using this state only to rerender component
     const gameOver = useRef(false)
-    const scoreTable = useRef(0)
+    const scoreTable = useRef()
 
     let value = null;
     let setValue = null;
@@ -23,14 +23,14 @@ export default (props) => {
             this.y = 0
         }
     }
-    let rendered = true
+    let childRendered = true
 
 
     const onChildMount = (dataFromChild) => {
-        rendered = true
+        childRendered = true
         value = dataFromChild[0];
         setValue = (value) => {
-            rendered = false
+            childRendered = false
             dataFromChild[1](value)
         };
 
@@ -66,9 +66,11 @@ export default (props) => {
 
 
     function tick() {
-        if (!running)
-            console.log('%c RUN ERROR!!', 'font-weight: bold; font-size: 50px;color: red; text-shadow: 3px 3px 0 rgb(217,31,38) , 6px 6px 0 rgb(226,91,14) , 9px 9px 0 rgb(245,221,8) , 12px 12px 0 rgb(5,148,68) , 15px 15px 0 rgb(2,135,206) , 18px 18px 0 rgb(4,77,145) , 21px 21px 0 rgb(42,21,113)');
+        // if (!running)
+        //     console.log('%c RUN ERROR!!', 'font-weight: bold; font-size: 50px;color: red; text-shadow: 3px 3px 0 rgb(217,31,38) , 6px 6px 0 rgb(226,91,14) , 9px 9px 0 rgb(245,221,8) , 12px 12px 0 rgb(5,148,68) , 15px 15px 0 rgb(2,135,206) , 18px 18px 0 rgb(4,77,145) , 21px 21px 0 rgb(42,21,113)');
 
+        if (!childRendered)
+            return false
         if (!value) {
             console.log('%c ERROR!!', 'font-weight: bold; font-size: 50px;color: red; text-shadow: 3px 3px 0 rgb(217,31,38) , 6px 6px 0 rgb(226,91,14) , 9px 9px 0 rgb(245,221,8) , 12px 12px 0 rgb(5,148,68) , 15px 15px 0 rgb(2,135,206) , 18px 18px 0 rgb(4,77,145) , 21px 21px 0 rgb(42,21,113)');
         }
@@ -101,7 +103,7 @@ export default (props) => {
 
                     clearInterval(loopId)
                     window.removeEventListener('keydown', keyPressHandler, false)
-                    setToggle2(!toggle2)
+                    rerender(!temp)
                     return 0
                 }
             }
@@ -218,11 +220,8 @@ export default (props) => {
 
 
     function rotate() {
-
         let tempFigure = currentFigure[0].map((val, index) => currentFigure.map(row => row[index]).reverse())
         console.log(tempFigure)
-
-
         const field = JSON.parse(JSON.stringify(value))
         for (let row = field.length - 1; row >= 0; row--) {
             for (let col = field[0].length - 1; col >= 0; col--) {
@@ -233,7 +232,6 @@ export default (props) => {
         console.log('checking from', figurePos.x, figurePos.y, 'to', figurePos.x + tempFigure.length - 1, figurePos.y + tempFigure.length - 1)
         for (let row = figurePos.y; row < figurePos.y + tempFigure.length; row++) {
             for (let col = figurePos.x; col < figurePos.x + tempFigure.length; col++) {
-
                 if ((!field[row]) || (field[row][col] !== 0))
                     return false
             }
@@ -251,19 +249,18 @@ export default (props) => {
     }
 
 
-    const init = () => {
+    const close = () => {
         window.removeEventListener('keydown', keyPressHandler, false)
-
         clearInterval(loopId)
         setToggle(!toggle)
     }
 
     function MoveSide(Side) {
-        if (!value || gameOver.current || !currentFigure || !rendered)
+        if (!value || gameOver.current || !currentFigure || !childRendered)
             return false
         if (!currentFigure)
             console.log('%c MOVESIDE ERROR!!', 'font-weight: bold; font-size: 50px;color: red; text-shadow: 3px 3px 0 rgb(217,31,38) , 6px 6px 0 rgb(226,91,14) , 9px 9px 0 rgb(245,221,8) , 12px 12px 0 rgb(5,148,68) , 15px 15px 0 rgb(2,135,206) , 18px 18px 0 rgb(4,77,145) , 21px 21px 0 rgb(42,21,113)');
-        if (!rendered)
+        if (!childRendered)
             console.log('%c MOVESIDE WHEN RENDER ERROR!!', 'font-weight: bold; font-size: 50px;color: red; text-shadow: 3px 3px 0 rgb(217,31,38) , 6px 6px 0 rgb(226,91,14) , 9px 9px 0 rgb(245,221,8) , 12px 12px 0 rgb(5,148,68) , 15px 15px 0 rgb(2,135,206) , 18px 18px 0 rgb(4,77,145) , 21px 21px 0 rgb(42,21,113)');
 
         const dir = Side === 'left' ? -1 : 1
@@ -320,7 +317,7 @@ export default (props) => {
 
         }
         if (event.key === 'ArrowDown') {
-            if (currentFigure && !gameOver.current && rendered)
+            if (currentFigure && !gameOver.current && childRendered)
                 moveDown()
 
         }
@@ -350,9 +347,8 @@ export default (props) => {
         gameOver.current = false
         window.removeEventListener('keydown', keyPressHandler, false)
         clearInterval(loopId)
-        setToggle2(!toggle2)
+        rerender(!temp)
     }
-
     window.addEventListener('keydown', keyPressHandler, false)
 
 
@@ -367,10 +363,7 @@ export default (props) => {
                 <TetrisField cellSize={cellSize} onMount={onChildMount}>
 
                 </TetrisField>
-                <button className='back-btn' onClick={
-                    init
-                }>Back
-                </button>
+                <button className='back-btn' onClick={close}>Back</button>
                 {gameOver.current ?
                     <button className='restart-btn' onClick={restart}>Restart</button>
                     : null}
