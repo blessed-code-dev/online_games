@@ -1,4 +1,4 @@
-import React, { useRef, useState} from "react";
+import React, {useRef, useState} from "react";
 import "./Tetris.css"
 import TetrisField from "../TetrisField/TetrisField";
 import {Transition} from "react-transition-group";
@@ -53,10 +53,10 @@ export default (props) => {
             console.log('%cbegin tick                   ', 'background: green;')
             console.log('now value is', value)
             tick()
-            setTimeout(() => {
-                console.log('%cend of async tick', 'background: black;')
-                console.log('now value is', value)
-            })
+            // setTimeout(() => {
+            //     console.log('%cend of async tick', 'background: black;')
+            //     console.log('now value is', value)
+            // })
             console.log('%cend tick', 'background: red;')
             console.log('now value is', value)
             running = false
@@ -84,28 +84,44 @@ export default (props) => {
 
     }
 
+    const getValue = () => {
+        const arr = []
+        for (let row = -2; row < 20; row++) {
+            arr[row] = [];
+            for (let col = 0; col < 10; col++) {
+                arr[row][col] = value[row][col];
+            }
+        }
+        return arr
+    }
+
 
     const addFigure = () => {
         console.log('adding new figure, it is', currentFigure, 'now field is', value)
-        const field = JSON.parse(JSON.stringify(value))
+        const field = getValue()
+        console.log('был', value, 'стал', field)
         const places = 10 - currentFigure[0].length
         const start = Math.trunc(Math.random() * (places + 1))
         figurePos.x = start
-        figurePos.y = 0
+        figurePos.y = -2
         for (let i = 0; i < currentFigure.length; i++) {
             for (let j = 0; j < currentFigure[0].length; j++) {
-                if ((field[i][start + j] === 0) && (currentFigure[i][j] === 1)) {
-                    field[i][start + j] = 2
-                }
-                if ((field[i][start + j] === 1) && (currentFigure[i][j] === 1)) {
-                    gameOver.current = true
-                    console.log('game over')
+                // console.log(value)
+                // console.log(field,'  ',i,'  ',field[i],'?????')
 
-                    clearInterval(loopId)
-                    window.removeEventListener('keydown', keyPressHandler, false)
-                    rerender(!temp)
-                    return 0
+
+                if ((field[i - 2][start + j] === 0) && (currentFigure[i][j] === 1)) {
+                    field[i - 2][start + j] = 2
                 }
+                // if ((field[i][start + j] === 1) && (currentFigure[i][j] === 1)) {
+                //     gameOver.current = true
+                //     console.log('game over')
+                //
+                //     clearInterval(loopId)
+                //     window.removeEventListener('keydown', keyPressHandler, false)
+                //     rerender(!temp)
+                //     return 0
+                // }
             }
         }
         console.log('%c123', 'color:yellow');
@@ -115,10 +131,10 @@ export default (props) => {
 
     const moveDown = () => {
         console.log(figurePos.x, figurePos.y)
-        const field = JSON.parse(JSON.stringify(value))
+        const field = getValue()
 
         const checkFigure = () => {
-            for (let row = field.length - 1; row >= 0; row--) {
+            for (let row = field.length - 1; row >= -2; row--) {
                 for (let col = field[0].length - 1; col >= 0; col--) {
                     if (field[row][col] === 2 && (!field[row + 1] || field[row + 1][col] === 1)) {
                         return false
@@ -128,11 +144,9 @@ export default (props) => {
             return true
         }
 
-        if (!field.flat().includes(2))
-            return false
 
         if (checkFigure()) {
-            for (let row = field.length - 1; row >= 0; row--) {
+            for (let row = field.length - 1; row >= -2; row--) {
                 for (let col = field[0].length - 1; col >= 0; col--) {
                     if (field[row][col] === 2) {
                         field[row + 1][col] = 2
@@ -148,7 +162,7 @@ export default (props) => {
             console.log(Number(scoreTable.current.innerText.split(' ')[1]), 'это вот')
             scoreTable.current.innerText = 'Score: ' + (Number(scoreTable.current.innerText.split(' ')[1]) + 1)
             currentFigure = 0
-            for (let row = field.length - 1; row >= 0; row--) {
+            for (let row = field.length - 1; row >= -2; row--) {
                 for (let col = field[0].length - 1; col >= 0; col--) {
                     if (field[row][col] === 2)
                         field[row][col] = 1
@@ -156,6 +170,16 @@ export default (props) => {
             }
             figurePos.reset()
             console.log('removed,field is', field)
+
+            if (field[-1].includes(1) || field[-2].includes(1)) {
+                gameOver.current = true
+                console.log('game over')
+
+                clearInterval(loopId)
+                window.removeEventListener('keydown', keyPressHandler, false)
+                rerender(!temp)
+                return 0
+            }
 
             setTimeout(tick)
         }
@@ -209,7 +233,7 @@ export default (props) => {
         for (let row = 0; row < field.length; row++) {
             if (field[row].every(elem => elem === 1)) {
                 console.log('надо удалить ряд', row)
-                for (let i = row; i > 0; i--) {
+                for (let i = row; i > -2; i--) {
                     field[i] = field[i - 1]
                 }
             }
@@ -222,8 +246,8 @@ export default (props) => {
     function rotate() {
         let tempFigure = currentFigure[0].map((val, index) => currentFigure.map(row => row[index]).reverse())
         console.log(tempFigure)
-        const field = JSON.parse(JSON.stringify(value))
-        for (let row = field.length - 1; row >= 0; row--) {
+        const field = getValue()
+        for (let row = field.length - 1; row >= -2; row--) {
             for (let col = field[0].length - 1; col >= 0; col--) {
                 if (field[row][col] === 2)
                     field[row][col] = 0
@@ -265,9 +289,9 @@ export default (props) => {
 
         const dir = Side === 'left' ? -1 : 1
         console.log('value сейчас', value)
-        const field = JSON.parse(JSON.stringify(value))
+        const field = getValue()
         console.log('для движения получили', field)
-        for (let row = field.length - 1; row >= 0; row--) {
+        for (let row = field.length - 1; row >= -2; row--) {
             for (let col = field[0].length - 1; col >= 0; col--) {
                 if (field[row][col] === 2 && !((field[row][col + dir] === 0) || (field[row][col + dir] === 2))) {
                     return false
@@ -276,7 +300,7 @@ export default (props) => {
         }
         switch (Side) {
             case 'left':
-                for (let row = 0; row < field.length; row++) {
+                for (let row = -2; row < field.length; row++) {
                     for (let col = 0; col < field[0].length; col++) {
                         if (field[row][col] === 2) {
                             field[row][col - 1] = 2
@@ -289,7 +313,7 @@ export default (props) => {
                 setValue(field)
                 break
             case 'right':
-                for (let row = field.length - 1; row >= 0; row--) {
+                for (let row = field.length - 1; row >= -2; row--) {
                     for (let col = field[0].length - 1; col >= 0; col--) {
                         if (field[row][col] === 2) {
                             field[row][col + 1] = 2
