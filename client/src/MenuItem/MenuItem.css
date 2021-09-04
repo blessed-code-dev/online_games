@@ -1,0 +1,60 @@
+.MenuItem {
+    background-color: #ffffff;
+    height: 200px;
+    width: 200px;
+    border: 2px solid rgba(0, 0, 0, .1);
+    border-radius: 20px;
+    box-shadow: 7px 7px 23px 4px rgba(34, 60, 80, 1);
+    transition: border, box-shadow .3s;
+    /*margin-top: 140px;*/
+    float: left;
+}
+
+div {
+
+}
+
+:hover.MenuItem {
+    box-shadow: 17px 17px 23px 4px rgba(34, 60, 80, 0.7);
+    cursor: pointer;
+}
+
+
+@keyframes appear {
+    0% {
+        opacity: 0;
+        transform: scale(4) ;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes dissapear {
+
+    0% {
+        opacity: 0.5;
+
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(4) ;
+    }
+
+}
+
+
+.MenuBlock {
+    justify-content: center;
+    margin-left: 30%;
+    display: inline-block;
+}
+
+.MenuBlock.entering {
+    animation: 1000ms cubic-bezier(.12,.84,0,.95) appear;
+}
+
+.MenuBlock.exiting {
+    animation: 700ms cubic-bezier(.14,.93,0,1.03) dissapear;
+}
