@@ -171,7 +171,7 @@ function TicTacToe(props) {
     }
 
     return <Transition in={toggle} timeout={700} unmountOnExit onExited={()=>{props.goBack()}}>
-        {stat => <div className={`${stat}`}>
+        {stat => <div className={`tetris-wrapper${stat}`}>
             <p className='UpperText'>{text()}</p>
             <Field state={state.current} onSelect={Selected} onPick={Picked} unpickAll={unpickAll}
                    myTurn={stage.current === 'turn'} res={checkEnd()}>

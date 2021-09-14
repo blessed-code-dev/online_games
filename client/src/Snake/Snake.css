@@ -1,0 +1,63 @@
+.tetris-wrapper{
+
+    margin: 10px auto;
+    animation: 700ms cubic-bezier(.12, .84, 0, .95) square;
+
+}
+
+
+.exiting{
+    animation: 700ms cubic-bezier(.12, .84, 0, .95) out;
+}
+
+@keyframes out {
+    100% {
+        opacity: 0;
+        transform: scale(4);
+    }
+    0% {
+        opacity: 1;
+    }
+}
+
+
+@keyframes square {
+    0% {
+        opacity: 0;
+        transform: scale(4);
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.restart-btn{
+    margin-left: 5%;
+    width: 30%;
+    height: 50px;
+    margin-top: 15px;
+    color: #6f6;
+    font-family: 'Orbitron', Verdana, sans-serif;
+    font-size: 1.7em;
+    background: none;
+    box-shadow: 0 0 10px 0 rgba(0, 255, 0, 0.6)
+}
+.restart-btn:hover{
+    box-shadow: 0 0 10px 0 rgba(0, 255, 0, 1)
+}
+
+
+.back-btn{
+    margin-left: 0;
+    width: 30%;
+    height: 50px;
+    margin-top: 15px;
+    color: #6f6;
+    font-family: 'Orbitron', Verdana, sans-serif;
+    font-size: 1.7em;
+    background: none;
+    box-shadow: 0 0 10px 0 rgba(0, 255, 0, 0.6)
+}
+.back-btn:hover{
+    box-shadow: 0 0 10px 0 rgba(0, 255, 0, 1)
+}
