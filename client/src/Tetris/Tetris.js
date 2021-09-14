@@ -1,5 +1,4 @@
 import React, {useRef, useState} from "react";
-import "./Tetris.css"
 import TetrisField from "../TetrisField/TetrisField";
 import {Transition} from "react-transition-group";
 
@@ -382,15 +381,18 @@ export default (props) => {
             clearInterval(loopId)
             props.goBack()
         }}>
-            {state => <div className={`tetris-wrapper ${state}`} style={style}>
-                <h1 style={{color: 'white', margin: 0}} ref={scoreTable}>Score: 0</h1>
-                <TetrisField cellSize={cellSize} onMount={onChildMount}>
+            {state =>
+                <div className={`tetris ${state}`}>
+                    <div className='tetris-wrapper' style={style}>
+                        <h1 style={{color: 'white', margin: 0}} ref={scoreTable}>Score: 0</h1>
+                        <TetrisField cellSize={cellSize} onMount={onChildMount}>
 
-                </TetrisField>
-                <button className='back-btn' onClick={close}>Back</button>
-                {gameOver.current ?
-                    <button className='restart-btn' onClick={restart}>Restart</button>
-                    : null}
-            </div>}
+                        </TetrisField>
+                        <button className='back-btn' onClick={close}>Back</button>
+                        {gameOver.current ?
+                            <button className='restart-btn' onClick={restart}>Restart</button>
+                            : null}
+                    </div>
+                </div>}
         </Transition>)
 }

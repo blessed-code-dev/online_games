@@ -4,6 +4,7 @@ import {Transition} from "react-transition-group";
 import TicTacToe from "./TikTakToe/TicTacToe";
 import Tetris from "./Tetris/Tetris";
 import Snake from "./Snake/Snake";
+import './styles.css'
 
 function NewApp() {
     const [toggle, setToggle] = useState(true)
@@ -28,14 +29,14 @@ function NewApp() {
                         }}>
                 {state =>
                     <div className={`MenuBlock ${state}`}>
-                        <MenuItem class={'first'} name='Раз' click={() => {
+                        <MenuItem name='Раз' click={() => {
                             setLayout('Switching to TicTacToe')
 
                         }}/>
-                        <MenuItem className={'second'} name='Два' click={() => {
+                        <MenuItem name='Два' click={() => {
                             setLayout('Switching to Tetris')
                         }}/>
-                        <MenuItem className={'third'} name='Два' click={() => {
+                        <MenuItem name='Два' click={() => {
                             setLayout('Switching to Snake')
                         }}/>
                     </div>}
@@ -43,23 +44,17 @@ function NewApp() {
 
 
             {layout === 'TicTacToe' ?
-                <div className={`TicTacField`}>
                     <TicTacToe goBack={back}/>
-                </div>
                 : null
             }
 
             {layout === 'Tetris' ?
-                <div>
                     <Tetris goBack={back}/>
-                </div>
                 : null
             }
 
             {layout === 'Snake' ?
-                <div className={`Snake`}>
                     <Snake goBack={back}/>
-                </div>
                 : null
             }
 

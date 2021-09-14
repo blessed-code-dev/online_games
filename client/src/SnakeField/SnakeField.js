@@ -1,5 +1,4 @@
 import {useEffect, useRef, useState} from "react";
-import {logDOM} from "@testing-library/react";
 
 export default (props) => {
 
@@ -50,6 +49,12 @@ export default (props) => {
                             ctx.beginPath()
                             ctx.fillStyle = `rgb(3, 255, 37)`
                             ctx.fillRect(col * cellSize, row * cellSize, cellSize, cellSize)
+                            ctx.closePath()
+                            ctx.stroke()
+                        } else if (value1 === -1) {
+                            ctx.beginPath()
+                            ctx.fillStyle = `rgb(52, 34, 20)`
+                            ctx.arc((col+0.5) * cellSize, (row+0.5) * cellSize,cellSize/5,0,2*Math.PI)
                             ctx.closePath()
                             ctx.stroke()
                         } else {

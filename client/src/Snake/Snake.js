@@ -229,15 +229,18 @@ export default (props) => {
             window.removeEventListener('keydown', keyUpHandler, false)
             props.goBack()
         }}>
-            {state => <div className={`tetris-wrapper ${state}`} style={style}>
-                <h1 style={{color: 'white', margin: 0}} ref={scoreTable}>Score: 0</h1>
-                <SnakeField cellSize={cellSize} onMount={onChildMount}>
+            {state =>
+                <div className={`snake ${state}`}>
+                    <div className={`snake-wrapper `} style={style}>
+                        <h1 style={{color: 'white', margin: 0}} ref={scoreTable}>Score: 0</h1>
+                        <SnakeField cellSize={cellSize} onMount={onChildMount}>
 
-                </SnakeField>
-                <button className='back-btn' onClick={close}>Back</button>
-                {gameOver.current ?
-                    <button className='restart-btn' onClick={restart}>Restart</button>
-                    : null}
-            </div>}
+                        </SnakeField>
+                        <button className='back-btn' onClick={close}>Back</button>
+                        {gameOver.current ?
+                            <button className='restart-btn' onClick={restart}>Restart</button>
+                            : null}
+                    </div>
+                </div>}
         </Transition>)
 }

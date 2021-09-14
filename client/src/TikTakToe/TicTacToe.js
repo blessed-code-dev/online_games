@@ -1,4 +1,3 @@
-import './TicTacToe.css'
 import React, {useEffect, useRef, useState} from "react";
 import axios from "axios";
 import Field from "../Field/Field";
@@ -170,17 +169,25 @@ function TicTacToe(props) {
         rerender(Math.random())
     }
 
-    return <Transition in={toggle} timeout={700} unmountOnExit onExited={()=>{props.goBack()}}>
-        {stat => <div className={`tetris-wrapper${stat}`}>
-            <p className='UpperText'>{text()}</p>
-            <Field state={state.current} onSelect={Selected} onPick={Picked} unpickAll={unpickAll}
-                   myTurn={stage.current === 'turn'} res={checkEnd()}>
-            </Field>
-            <button className='back-btn' onClick={()=>{setToggle(!toggle)}}>Back</button>
-            {(stage.current === 'draw' || stage.current === 'end') ?
-                <button className='restart-btn' onClick={restart}>Restart</button>
-                : null}
-        </div>}
+    return <Transition in={toggle} timeout={690} unmountOnExit onExited={() => {
+        props.goBack()
+    }}>
+        {stat =>
+            <div className={`ticTacToe ${stat}`}>
+                <div className={`tictactoe-wrapper`}>
+                    <p className='UpperText'>{text()}</p>
+                    <Field state={state.current} onSelect={Selected} onPick={Picked} unpickAll={unpickAll}
+                           myTurn={stage.current === 'turn'} res={checkEnd()}>
+                    </Field>
+                    <button className='back-btn' onClick={() => {
+                        setToggle(!toggle)
+                    }}>Back
+                    </button>
+                    {(stage.current === 'draw' || stage.current === 'end') ?
+                        <button className='restart-btn' onClick={restart}>Restart</button>
+                        : null}
+                </div>
+            </div>}
     </Transition>
 }
 

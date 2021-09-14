@@ -1,7 +1,5 @@
-import Car from './Car/Car'
 import React, {useState} from "react";
-import ErrorBoundary from "./ErrorBoundry/ErrorBoundary";
-import Counter from "./Counter/Counter";
+
 
 function App() {
     const divStyle = {

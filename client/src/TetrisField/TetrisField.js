@@ -1,5 +1,4 @@
 import {useEffect, useRef, useState} from "react";
-import {logDOM} from "@testing-library/react";
 
 export default (props) => {
 
