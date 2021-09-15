@@ -17,7 +17,7 @@ app.set('view engine', 'jade');
 
 app.use(
   cors({
-      origin: `${config.baseUri}:3000`,
+      origin: `*`,
        })
 )
 app.use(logger('dev'));
