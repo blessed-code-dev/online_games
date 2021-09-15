@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState} from "react";
 import axios from "axios";
 import Field from "../Field/Field";
 import {Transition} from "react-transition-group";
-
+import config from '../config.json'
 //epilogue
 // Callbacks are defined to listen to events over time.
 // They`re declared and then they stick around, listening.
@@ -19,7 +19,7 @@ import {Transition} from "react-transition-group";
 
 
 function TicTacToe(props) {
-    console.log('new rerender')
+    // console.log('new rerender',config.baseUri)
 
     const canvasRef = useRef(null)
     const state = useRef(['', '', '', '', '', '', '', '', ''])
@@ -120,7 +120,7 @@ function TicTacToe(props) {
         if (stage.current === 'wait')
             axios({
                 method: 'get',
-                url: 'http://localhost:5000/',
+                url: `${config.baseUri}:5000/`,
                 headers: {
                     nextStep: `${index}`,
                     board: state.current.join('/')

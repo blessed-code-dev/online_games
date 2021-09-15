@@ -6,6 +6,7 @@ var logger = require('morgan');
 var cors=require('cors')
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var config=require('./config.json')
 
 var app = express();
 
@@ -16,7 +17,7 @@ app.set('view engine', 'jade');
 
 app.use(
   cors({
-      origin: 'http://localhost:3000',
+      origin: `${config.baseUri}:3000`,
        })
 )
 app.use(logger('dev'));
