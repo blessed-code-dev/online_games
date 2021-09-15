@@ -120,7 +120,7 @@ function TicTacToe(props) {
         if (stage.current === 'wait')
             axios({
                 method: 'get',
-                url: `${config.baseUri}:80/`,
+                url: `${config.baseUri}:80/field_api`,
                 headers: {
                     nextStep: `${index}`,
                     board: state.current.join('/')
