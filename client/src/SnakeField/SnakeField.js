@@ -53,7 +53,7 @@ export default (props) => {
                             ctx.stroke()
                         } else if (value1 === -1) {
                             ctx.beginPath()
-                            ctx.fillStyle = `rgb(52, 34, 20)`
+                            ctx.fillStyle = `rgb(17, 28, 189)`
                             ctx.arc((col+0.5) * cellSize, (row+0.5) * cellSize,cellSize/5,0,2*Math.PI)
                             ctx.closePath()
                             ctx.stroke()

@@ -10,14 +10,15 @@ body {
     width: 14vmax;
     border-radius: 2vmax;
     box-shadow: 0 4px 43px 18px rgba(34, 60, 80, 0.43);
-    transition: border, box-shadow .3s;
+    transition: all .3s;
     position: relative;
 }
 
 
 .MenuItem:hover {
-    box-shadow: 0 4px 42px 68px rgba(34, 60, 80, 1);
+    box-shadow: 0 4px 42px 38px rgba(34, 60, 80, 1);
     cursor: pointer;
+    transform: scale(1.1);
 }
 
 .MenuItem:nth-child(1) {
@@ -72,7 +73,7 @@ body {
     height: 100vh;
     align-items: center;
     position: relative;
-    background: linear-gradient(0deg, rgba(30, 66, 92, 1) 0%, rgba(34, 2, 47, 1) 16%, rgba(33, 19, 59, 1) 86%, rgba(30, 66, 92, 1) 100%);
+    background: radial-gradient(circle, rgba(30, 66, 92, 1) 0%, rgba(187, 187, 187, 1) 0%, rgba(80, 105, 122, 1) 46%, rgba(30, 66, 92, 1) 83%);
     animation: 1000ms cubic-bezier(.12, .84, 0, .95) appear;
 }
 
