@@ -16,6 +16,9 @@ const config=require('../config.json')
 var port = normalizePort(process.env.PORT || config.port);
 app.set('port', port);
 
+if (process.env.NODE_ENV==='production'){
+    app.use('/',express.static())
+}
 /**
  * Create HTTP server.
  */
