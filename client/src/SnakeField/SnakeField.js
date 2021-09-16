@@ -54,9 +54,9 @@ export default (props) => {
                         } else if (value1 === -1) {
                             ctx.beginPath()
                             ctx.fillStyle = `rgb(17, 28, 189)`
-                            ctx.arc((col+0.5) * cellSize, (row+0.5) * cellSize,cellSize/5,0,2*Math.PI)
+                            ctx.arc((col+0.5) * cellSize, (row+0.5) * cellSize,cellSize/2,0,2*Math.PI)
                             ctx.closePath()
-                            ctx.stroke()
+                            ctx.fill()
                         } else {
                             ctx.beginPath()
                             ctx.fillStyle = `rgb(255, 1, 1)`
