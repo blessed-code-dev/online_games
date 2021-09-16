@@ -120,7 +120,7 @@ function TicTacToe(props) {
         if (stage.current === 'wait')
             axios({
                 method: 'get',
-                url: `${config.baseUri}:80/field_api`,
+                url: `${config.baseUri}field_api`,
                 headers: {
                     nextStep: `${index}`,
                     board: state.current.join('/')
@@ -172,7 +172,9 @@ function TicTacToe(props) {
     return <Transition in={toggle} timeout={690} unmountOnExit onExited={() => {
         props.goBack()
     }}>
+
         {stat =>
+
             <div className={`ticTacToe ${stat}`}>
                 <div className={`tictactoe-wrapper`}>
                     <p className='UpperText'>{text()}</p>

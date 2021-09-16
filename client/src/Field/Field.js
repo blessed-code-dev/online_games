@@ -6,8 +6,11 @@ const Field = (props) => {
         //console.log('usingEffect ', props.res)
         let index = -1
         const canvas = canvasRef.current
-        canvas.width = 600
-        canvas.height = 600
+        canvas.width = Math.min(document.documentElement.clientWidth, document.documentElement.clientHeight) * 0.7
+        canvas.height = Math.min(document.documentElement.clientWidth, document.documentElement.clientHeight) * 0.7
+        console.log(canvas.width)
+        console.log(canvas.height)
+
         const width = canvas.width;
         const height = canvas.height;
         const ctx = canvas.getContext('2d')
@@ -57,17 +60,17 @@ const Field = (props) => {
 
         if (props.res !== 0) {
             if (props.res[0] !== -1) {
-                    const startX = props.res[0] % 3
-                    const startY = Math.trunc(props.res[0] / 3)
-                    const endX = props.res[1] % 3
-                    const endY = Math.trunc(props.res[1] / 3)
-                    ctx.beginPath();
-                    ctx.moveTo((props.res[0] % 3) * width / 3 + width / 6 - (endX - startX) * 30, Math.trunc(props.res[0] / 3) * width / 3 + width / 6 - (endY - startY) * 30)
-                    ctx.lineTo((props.res[1]% 3) * width / 3 + width / 6 + (endX - startX) * 30, Math.trunc(props.res[1] / 3) * width / 3 + width / 6 + (endY - startY) * 30)
-                    ctx.lineWidth = 15
-                    ctx.closePath()
-                    ctx.stroke()
-                    //console.log('тут линия от ' + props.res[0] + 'до' +props.res[1])
+                const startX = props.res[0] % 3
+                const startY = Math.trunc(props.res[0] / 3)
+                const endX = props.res[1] % 3
+                const endY = Math.trunc(props.res[1] / 3)
+                ctx.beginPath();
+                ctx.moveTo((props.res[0] % 3) * width / 3 + width / 6 - (endX - startX) * 30, Math.trunc(props.res[0] / 3) * width / 3 + width / 6 - (endY - startY) * 30)
+                ctx.lineTo((props.res[1] % 3) * width / 3 + width / 6 + (endX - startX) * 30, Math.trunc(props.res[1] / 3) * width / 3 + width / 6 + (endY - startY) * 30)
+                ctx.lineWidth = 15
+                ctx.closePath()
+                ctx.stroke()
+                //console.log('тут линия от ' + props.res[0] + 'до' +props.res[1])
             }
         }
         if (props.myTurn) {
@@ -120,7 +123,7 @@ const Field = (props) => {
             const indexY = Math.trunc(Y / height * 3)
             const newIndex = indexY * 3 + indexX
             // //console.log(index, state[index])
-            if ((props.state[newIndex] === '?')||(props.state[newIndex] === '')) {
+            if ((props.state[newIndex] === '?') || (props.state[newIndex] === '')) {
                 removeListeners()
                 props.onPick(newIndex)
             }
@@ -138,10 +141,10 @@ const Field = (props) => {
             const x = (index) % 3
             const y = Math.trunc(index / 3)
             ctx.beginPath();
-            ctx.moveTo(width / 3 * x + 30, height / 3 * y + 30)
-            ctx.lineTo(width / 3 * x + width / 3 - 30, height / 3 * y + height / 3 - 30)
-            ctx.moveTo(width / 3 * x + width / 3 - 30, height / 3 * y + 30)
-            ctx.lineTo(width / 3 * x + 30, height / 3 * y + height / 3 - 30)
+            ctx.moveTo(width / 3 * x + width/20, height / 3 * y + width/20)
+            ctx.lineTo(width / 3 * x + width / 3 - width/20, height / 3 * y + height / 3 - width/20)
+            ctx.moveTo(width / 3 * x + width / 3 - width/20, height / 3 * y + width/20)
+            ctx.lineTo(width / 3 * x + width/20, height / 3 * y + height / 3 - width/20)
             ctx.closePath()
             ctx.stroke()
         }

@@ -7,7 +7,7 @@ export default (props) => {
     const canvasRef = useRef()
     useEffect(async () => {
         props.onMount([value, setValue]);
-        console.log('using effect1', value)
+        // console.log('using effect1', value)
 
         const cellSize = props.cellSize
         const canvas = canvasRef.current
@@ -59,7 +59,7 @@ export default (props) => {
                             ctx.stroke()
                         } else {
                             ctx.beginPath()
-                            ctx.fillStyle = `rgb(255, 14, 14, 0.3)`
+                            ctx.fillStyle = `rgb(255, 1, 1)`
                             ctx.fillRect(col * cellSize, row * cellSize, cellSize, cellSize)
                             ctx.closePath()
                             ctx.stroke()
