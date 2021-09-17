@@ -82,7 +82,8 @@ body {
     width: 100vw;
     height: 100vh;
     animation: 700ms cubic-bezier(.12, .84, 0, .95) appear;
-    background: radial-gradient(circle, rgba(30,66,92,1) 0%, rgba(214,47,47,1) 0%, rgba(80,105,122,1) 46%, rgba(30,66,92,1) 83%);
+    /*background: radial-gradient(circle, rgba(30,66,92,1) 0%, rgba(214,47,47,1) 0%, rgba(80,105,122,1) 46%, rgba(30,66,92,1) 83%);*/
+    background-color: black;
     overflow: hidden;
 }
 
@@ -90,7 +91,7 @@ body {
     width: 100vw;
     height: 100vh;
     animation: 700ms cubic-bezier(.12, .84, 0, .95) appear;
-    background: radial-gradient(circle, rgba(30,66,92,1) 0%, rgba(40,213,194,1) 0%, rgba(80,105,122,1) 46%, rgba(30,66,92,1) 83%);
+    background-color: black;
     overflow: hidden;
 
 }
@@ -99,7 +100,7 @@ body {
     width: 100vw;
     height: 100vh;
     animation: 700ms cubic-bezier(.12, .84, 0, .95) appear;
-    background: radial-gradient(circle, rgba(30,66,92,1) 0%, rgba(90,255,142,1) 0%, rgba(80,105,122,1) 46%, rgba(30,66,92,1) 83%);
+    background: radial-gradient(circle, rgba(30, 66, 92, 1) 0%, rgba(90, 255, 142, 1) 0%, rgba(80, 105, 122, 1) 46%, rgba(30, 66, 92, 1) 83%);
     overflow: hidden;
 
 }
@@ -127,33 +128,24 @@ body {
 }
 
 
-.restart-btn {
-    margin-left: 5%;
-    width: 30%;
-    height: 5vh;
-    color: #6f6;
-    font-family: 'Orbitron', Verdana, sans-serif;
-    font-size: 1.7em;
-    box-shadow: 0 0 10px 0 rgba(0, 255, 0, 0.6)
-}
-
-.restart-btn:hover {
-    box-shadow: 0 0 10px 0 rgba(0, 255, 0, 1)
-}
 
 
 .back-btn {
-    margin: 0;
+    margin-top: 10px;
     width: 30%;
-    height: 5vh;
-    color: #6f6;
+    height: 7vh;
     font-family: 'Orbitron', Verdana, sans-serif;
     font-size: 1.7rem;
-    box-shadow: 0 0 10px 0 rgba(0, 255, 0, 0.6)
+    box-shadow: 0 0 10px 0 rgba(255, 255, 255, 0.6);
+    background-image:    url("pics/266-2660273_expand-slideshow-white-back-icon-png.png");
+    background-size: contain;                      /* <------ */
+    background-repeat:   no-repeat;
+    background-position: center center;
+    background-color: black;
 }
 
 .back-btn:hover {
-    box-shadow: 0 0 10px 0 rgba(0, 255, 0, 1)
+    box-shadow: 0 0 10px 0 rgb(255, 255, 255)
 }
 
 
@@ -162,45 +154,30 @@ body {
     text-align: center;
     font-size: 5vh;
     color: #fff;
-    text-shadow: 0 0 4px #fff,
-    0 0 11px #fff,
-    0 0 19px #fff,
-    0 0 40px #f09,
-    0 0 80px #f09,
-    0 0 90px #f09,
-    0 0 100px #f09,
-    0 0 150px #f09;
+    text-shadow: 0 0 5px #fff,
+    0 0 3px #fff,
+    0 0 6px #fff,
+    0 0 15px #fff,
+    0 0 24px #fff,
+    0 0 27px #fff,
+    0 0 30px #fff,
+    0 0 42px #fff;
 }
 
 .restart-btn {
-    margin-left: 5%;
+    margin-left: 20px;
     width: 30%;
-    height: 10%;
-    margin-top: 15px;
-    color: #6f6;
+    height: 7vh;
     font-family: 'Orbitron', Verdana, sans-serif;
-    font-size: 2.2em;
-    background: none;
-    box-shadow: 0 0 10px 0 rgba(0, 255, 0, 0.6)
+    font-size: 1.7rem;
+    box-shadow: 0 0 10px 0 rgba(255, 255, 255, 0.6);
+    background-image:    url("pics/—Pngtree—white refresh icon_4543883.png");
+    background-size: contain;                      /* <------ */
+    background-repeat:   no-repeat;
+    background-position: center center;
+    background-color: black;
 }
 
 .restart-btn:hover {
-    box-shadow: 0 0 10px 0 rgba(0, 255, 0, 1)
-}
-
-
-.back-btn {
-    margin-left: 0;
-    width: 30%;
-    height: 10%;
-    margin-top: 15px;
-    color: #6f6;
-    font-family: 'Orbitron', Verdana, sans-serif;
-    font-size: 2.2em;
-    background: none;
-    box-shadow: 0 0 10px 0 rgba(0, 255, 0, 0.6)
-}
-
-.back-btn:hover {
-    box-shadow: 0 0 10px 0 rgba(0, 255, 0, 1)
+    box-shadow: 0 0 10px 0 rgb(255, 255, 255)
 }

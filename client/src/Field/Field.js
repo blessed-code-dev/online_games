@@ -8,8 +8,6 @@ const Field = (props) => {
         const canvas = canvasRef.current
         canvas.width = Math.min(document.documentElement.clientWidth, document.documentElement.clientHeight) * 0.7
         canvas.height = Math.min(document.documentElement.clientWidth, document.documentElement.clientHeight) * 0.7
-        console.log(canvas.width)
-        console.log(canvas.height)
 
         const width = canvas.width;
         const height = canvas.height;

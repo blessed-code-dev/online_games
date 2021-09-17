@@ -19,7 +19,8 @@ import config from '../config.json'
 
 
 function TicTacToe(props) {
-    // console.log('new rerender',config.baseUri)
+    // log('new rerender',config.baseUri)
+    const devMode = config.devMode
 
     const canvasRef = useRef(null)
     const state = useRef(['', '', '', '', '', '', '', '', ''])
@@ -29,10 +30,13 @@ function TicTacToe(props) {
     const botTurnPhrase = ['Hmmm', 'Let me think...', 'I`m thinking']
     const [toggle, setToggle] = useState(true)
 
-
+    const log = (value) => {
+        if (devMode)
+            console.log(value)
+    }
     function checkEnd() {
         const b = [state.current.slice(0, 3), state.current.slice(3, 6), state.current.slice(6, 9)]
-        //console.log(b)
+        log(b)
         if (!b.flat().includes('') && !b.flat().includes('?')) {
             stage.current = 'draw'
             return [-1, -1]
@@ -41,14 +45,14 @@ function TicTacToe(props) {
         for (let row = 0; row < 3; row++) {
             if (b[row][0] === b[row][1] && b[row][1] === b[row][2]) {
                 if (b[row][0] === 'x') {
-                    //console.log('x won on ', row, 'row')
+                    log('x won on ', row, 'row')
                     // drawLine(row * 3, row * 3 + 2)
                     stage.current = 'end'
                     return [row * 3, row * 3 + 2]
                 } else if (b[row][0] === 'o') {
                     // drawLine(row * 3, row * 3 + 2)
                     stage.current = 'end'
-                    //console.log('0 won on ', row, 'row')
+                    log('0 won on ', row, 'row')
                     return [row * 3, row * 3 + 2]
                 }
             }
@@ -58,14 +62,14 @@ function TicTacToe(props) {
         for (let col = 0; col < 3; col++) {
             if (b[0][col] === b[1][col] && b[1][col] === b[2][col]) {
                 if (b[0][col] === 'x') {
-                    //console.log('x won on ', col, 'col')
+                    log('x won on ', col, 'col')
                     // drawLine(col, col + 6)
                     stage.current = 'end'
                     return [col, col + 6]
 
                 } else if (b[0][col] === 'o') {
                     // drawLine(col, col + 6)
-                    //console.log('o won on ', col, 'col')
+                    log('o won on ', col, 'col')
                     stage.current = 'end'
                     return [col, col + 6]
 
@@ -77,12 +81,12 @@ function TicTacToe(props) {
         if (b[0][0] === b[1][1] && b[1][1] === b[2][2]) {
             if (b[0][0] === 'x') {
                 // drawLine(0, 8)
-                //console.log('x won on main dia')
+                log('x won on main dia')
                 stage.current = 'end'
                 return [0, 8]
             } else if (b[0][0] === 'o') {
                 // drawLine(0, 8)
-                //console.log('0 won on main dia')
+                log('0 won on main dia')
                 stage.current = 'end'
                 return [0, 8]
 
@@ -92,27 +96,27 @@ function TicTacToe(props) {
 
             if (b[0][2] === 'x') {
                 // drawLine(2, 6)
-                //console.log('x won on sec dia')
+                log('x won on sec dia')
                 stage.current = 'end'
 
                 return [2, 6]
 
             } else if (b[0][2] === 'o') {
                 // drawLine(2, 6)
-                //console.log('0 won on sec dia')
+                log('0 won on sec dia')
                 stage.current = 'end'
                 return [2, 6]
             }
 
 
         }
-        //console.log('return 0')
+        log('return 0')
         return 0
     }
 
     function Picked(index) {
 
-        //console.log('Pick ', index)
+        log('Pick ', index)
         state.current[index] = 'o'
         stage.current = 'wait'
         checkEnd()
@@ -126,7 +130,7 @@ function TicTacToe(props) {
                     board: state.current.join('/')
                 }
             }).then(res => {
-                // //console.log(res.data.myStep);
+                // log(res.data.myStep);
                 const botStep = res.data.myStep
                 state.current[botStep[0] + botStep[1] * 3] = 'x'
                 stage.current = 'turn'
@@ -137,7 +141,7 @@ function TicTacToe(props) {
     }
 
     function Selected(index) {
-        //console.log('Select ', index)
+        log('Select ', index)
         let newState = JSON.parse(JSON.stringify(state))
         state.current = state.current.map(value => value === '?' ? '' : value).map(value => value === '' ? 'w' : value).map(value => value === 'w' ? '' : value)
         state.current[index] = '?'
@@ -146,7 +150,7 @@ function TicTacToe(props) {
     }
 
     function unpickAll() {
-        //console.log('Unpick All ')
+        log('Unpick All ')
         let newState = JSON.parse(JSON.stringify(state))
         state.current = state.current.map(value => value === '?' ? '' : value).map(value => value === '' ? 'w' : value).map(value => value === 'w' ? '' : value)
         rerender(Math.random())
@@ -183,10 +187,10 @@ function TicTacToe(props) {
                     </Field>
                     <button className='back-btn' onClick={() => {
                         setToggle(!toggle)
-                    }}>Back
+                    }}>
                     </button>
                     {(stage.current === 'draw' || stage.current === 'end') ?
-                        <button className='restart-btn' onClick={restart}>Restart</button>
+                        <button className='restart-btn' onClick={restart}></button>
                         : null}
                 </div>
             </div>}

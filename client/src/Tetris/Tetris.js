@@ -1,13 +1,14 @@
 import React, {useRef, useState} from "react";
 import TetrisField from "../TetrisField/TetrisField";
 import {Transition} from "react-transition-group";
+import config from "../config.json";
 
 export default (props) => {
     const [toggle, setToggle] = useState(true)
     const [temp, rerender] = useState(true) //using this state only to rerender component
     const gameOver = useRef(false)
     const scoreTable = useRef()
-
+    const devMode = config.devMode
     let value = null;
     let setValue = null;
     let arr = []
@@ -23,7 +24,10 @@ export default (props) => {
         }
     }
     let childRendered = true
-
+    const log = (value) => {
+        if (devMode)
+            console.log(value)
+    }
 
     const onChildMount = (dataFromChild) => {
         childRendered = true
@@ -40,7 +44,7 @@ export default (props) => {
                     arr[row][col] = 0;
                 }
             }
-            console.log('%c123', 'color:yellow');
+            log('%c123', 'color:yellow');
             setValue(arr)
         }
     };
@@ -49,15 +53,15 @@ export default (props) => {
     const loopId = setInterval(() => {
         if (!gameOver.current) {
             running = true
-            console.log('%cbegin tick                   ', 'background: green;')
-            console.log('now value is', value)
+            log('%cbegin tick                   ', 'background: green;')
+            log('now value is', value)
             tick()
             // setTimeout(() => {
-            //     console.log('%cend of async tick', 'background: black;')
-            //     console.log('now value is', value)
+            //     log('%cend of async tick', 'background: black;')
+            //     log('now value is', value)
             // })
-            console.log('%cend tick', 'background: red;')
-            console.log('now value is', value)
+            log('%cend tick', 'background: red;')
+            log('now value is', value)
             running = false
 
         }
@@ -66,12 +70,12 @@ export default (props) => {
 
     function tick() {
         // if (!running)
-        //     console.log('%c RUN ERROR!!', 'font-weight: bold; font-size: 50px;color: red; text-shadow: 3px 3px 0 rgb(217,31,38) , 6px 6px 0 rgb(226,91,14) , 9px 9px 0 rgb(245,221,8) , 12px 12px 0 rgb(5,148,68) , 15px 15px 0 rgb(2,135,206) , 18px 18px 0 rgb(4,77,145) , 21px 21px 0 rgb(42,21,113)');
+        //     log('%c RUN ERROR!!', 'font-weight: bold; font-size: 50px;color: red; text-shadow: 3px 3px 0 rgb(217,31,38) , 6px 6px 0 rgb(226,91,14) , 9px 9px 0 rgb(245,221,8) , 12px 12px 0 rgb(5,148,68) , 15px 15px 0 rgb(2,135,206) , 18px 18px 0 rgb(4,77,145) , 21px 21px 0 rgb(42,21,113)');
 
         if (!childRendered)
             return false
         if (!value) {
-            console.log('%c ERROR!!', 'font-weight: bold; font-size: 50px;color: red; text-shadow: 3px 3px 0 rgb(217,31,38) , 6px 6px 0 rgb(226,91,14) , 9px 9px 0 rgb(245,221,8) , 12px 12px 0 rgb(5,148,68) , 15px 15px 0 rgb(2,135,206) , 18px 18px 0 rgb(4,77,145) , 21px 21px 0 rgb(42,21,113)');
+            log('%c ERROR!!', 'font-weight: bold; font-size: 50px;color: red; text-shadow: 3px 3px 0 rgb(217,31,38) , 6px 6px 0 rgb(226,91,14) , 9px 9px 0 rgb(245,221,8) , 12px 12px 0 rgb(5,148,68) , 15px 15px 0 rgb(2,135,206) , 18px 18px 0 rgb(4,77,145) , 21px 21px 0 rgb(42,21,113)');
         }
         if (!currentFigure) {
             currentFigure = figures[Math.trunc(Math.random() * figures.length)]
@@ -96,17 +100,17 @@ export default (props) => {
 
 
     const addFigure = () => {
-        console.log('adding new figure, it is', currentFigure, 'now field is', value)
+        log('adding new figure, it is', currentFigure, 'now field is', value)
         const field = getValue()
-        console.log('был', value, 'стал', field)
+        log('был', value, 'стал', field)
         const places = 10 - currentFigure[0].length
         const start = Math.trunc(Math.random() * (places + 1))
         figurePos.x = start
         figurePos.y = -2
         for (let i = 0; i < currentFigure.length; i++) {
             for (let j = 0; j < currentFigure[0].length; j++) {
-                // console.log(value)
-                // console.log(field,'  ',i,'  ',field[i],'?????')
+                // log(value)
+                // log(field,'  ',i,'  ',field[i],'?????')
 
 
                 if ((field[i - 2][start + j] === 0) && (currentFigure[i][j] === 1)) {
@@ -114,7 +118,7 @@ export default (props) => {
                 }
                 // if ((field[i][start + j] === 1) && (currentFigure[i][j] === 1)) {
                 //     gameOver.current = true
-                //     console.log('game over')
+                //     log('game over')
                 //
                 //     clearInterval(loopId)
                 //     window.removeEventListener('keydown', keyPressHandler, false)
@@ -123,13 +127,13 @@ export default (props) => {
                 // }
             }
         }
-        console.log('%c123', 'color:yellow');
+        log('%c123', 'color:yellow');
         setValue(field)
     }
 
 
     const moveDown = () => {
-        console.log(figurePos.x, figurePos.y)
+        log(figurePos.x, figurePos.y)
         const field = getValue()
 
         const checkFigure = () => {
@@ -157,8 +161,8 @@ export default (props) => {
             figurePos.y++
         }
         if (!checkFigure()) {
-            console.log('removing figure')
-            console.log(Number(scoreTable.current.innerText.split(' ')[1]), 'это вот')
+            log('removing figure')
+            log(Number(scoreTable.current.innerText.split(' ')[1]), 'это вот')
             scoreTable.current.innerText = 'Score: ' + (Number(scoreTable.current.innerText.split(' ')[1]) + 1)
             currentFigure = 0
             for (let row = field.length - 1; row >= -2; row--) {
@@ -168,11 +172,11 @@ export default (props) => {
                 }
             }
             figurePos.reset()
-            console.log('removed,field is', field)
+            log('removed,field is', field)
 
             if (field[-1].includes(1) || field[-2].includes(1)) {
                 gameOver.current = true
-                console.log('game over')
+                log('game over')
 
                 clearInterval(loopId)
                 window.removeEventListener('keydown', keyPressHandler, false)
@@ -183,7 +187,7 @@ export default (props) => {
             setTimeout(tick)
         }
 
-        console.log('%c123', 'color:yellow');
+        log('%c123', 'color:yellow');
         setValue(checkClear(field))
     }
 
@@ -231,7 +235,7 @@ export default (props) => {
 
         for (let row = 0; row < field.length; row++) {
             if (field[row].every(elem => elem === 1)) {
-                console.log('надо удалить ряд', row)
+                log('надо удалить ряд', row)
                 for (let i = row; i > -2; i--) {
                     field[i] = field[i - 1]
                 }
@@ -244,7 +248,7 @@ export default (props) => {
 
     function rotate() {
         let tempFigure = currentFigure[0].map((val, index) => currentFigure.map(row => row[index]).reverse())
-        console.log(tempFigure)
+        log(tempFigure)
         const field = getValue()
         for (let row = field.length - 1; row >= -2; row--) {
             for (let col = field[0].length - 1; col >= 0; col--) {
@@ -252,7 +256,7 @@ export default (props) => {
                     field[row][col] = 0
             }
         }
-        console.log('checking from', figurePos.x, figurePos.y, 'to', figurePos.x + tempFigure.length - 1, figurePos.y + tempFigure.length - 1)
+        log('checking from', figurePos.x, figurePos.y, 'to', figurePos.x + tempFigure.length - 1, figurePos.y + tempFigure.length - 1)
         for (let row = figurePos.y; row < figurePos.y + tempFigure.length; row++) {
             for (let col = figurePos.x; col < figurePos.x + tempFigure.length; col++) {
                 if ((!field[row]) || (field[row][col] !== 0))
@@ -266,7 +270,7 @@ export default (props) => {
             }
         }
         currentFigure = tempFigure
-        console.log('%c123', 'color:yellow');
+        log('%c123', 'color:yellow');
         setValue(field)
         return true
     }
@@ -282,14 +286,14 @@ export default (props) => {
         if (!value || gameOver.current || !currentFigure || !childRendered)
             return false
         if (!currentFigure)
-            console.log('%c MOVESIDE ERROR!!', 'font-weight: bold; font-size: 50px;color: red; text-shadow: 3px 3px 0 rgb(217,31,38) , 6px 6px 0 rgb(226,91,14) , 9px 9px 0 rgb(245,221,8) , 12px 12px 0 rgb(5,148,68) , 15px 15px 0 rgb(2,135,206) , 18px 18px 0 rgb(4,77,145) , 21px 21px 0 rgb(42,21,113)');
+            log('%c MOVESIDE ERROR!!', 'font-weight: bold; font-size: 50px;color: red; text-shadow: 3px 3px 0 rgb(217,31,38) , 6px 6px 0 rgb(226,91,14) , 9px 9px 0 rgb(245,221,8) , 12px 12px 0 rgb(5,148,68) , 15px 15px 0 rgb(2,135,206) , 18px 18px 0 rgb(4,77,145) , 21px 21px 0 rgb(42,21,113)');
         if (!childRendered)
-            console.log('%c MOVESIDE WHEN RENDER ERROR!!', 'font-weight: bold; font-size: 50px;color: red; text-shadow: 3px 3px 0 rgb(217,31,38) , 6px 6px 0 rgb(226,91,14) , 9px 9px 0 rgb(245,221,8) , 12px 12px 0 rgb(5,148,68) , 15px 15px 0 rgb(2,135,206) , 18px 18px 0 rgb(4,77,145) , 21px 21px 0 rgb(42,21,113)');
+            log('%c MOVESIDE WHEN RENDER ERROR!!', 'font-weight: bold; font-size: 50px;color: red; text-shadow: 3px 3px 0 rgb(217,31,38) , 6px 6px 0 rgb(226,91,14) , 9px 9px 0 rgb(245,221,8) , 12px 12px 0 rgb(5,148,68) , 15px 15px 0 rgb(2,135,206) , 18px 18px 0 rgb(4,77,145) , 21px 21px 0 rgb(42,21,113)');
 
         const dir = Side === 'left' ? -1 : 1
-        console.log('value сейчас', value)
+        log('value сейчас', value)
         const field = getValue()
-        console.log('для движения получили', field)
+        log('для движения получили', field)
         for (let row = field.length - 1; row >= -2; row--) {
             for (let col = field[0].length - 1; col >= 0; col--) {
                 if (field[row][col] === 2 && !((field[row][col + dir] === 0) || (field[row][col + dir] === 2))) {
@@ -308,7 +312,7 @@ export default (props) => {
                     }
                 }
                 figurePos.x--
-                console.log('%c123', 'color:yellow');
+                log('%c123', 'color:yellow');
                 setValue(field)
                 break
             case 'right':
@@ -321,7 +325,7 @@ export default (props) => {
                     }
                 }
                 figurePos.x++
-                console.log('%c123', 'color:yellow');
+                log('%c123', 'color:yellow');
                 setValue(field)
                 break
 
@@ -330,13 +334,13 @@ export default (props) => {
 
     function keyPressHandler(event) {
         if ((event.key === 'ArrowUp') && (currentFigure)) {
-            console.log('rotate', rotate())
+            log('rotate', rotate())
             // let field = JSON.parse(JSON.stringify(value))
             // const index = 19
             // for (let i = index; i > 0; i--) {
             //     field[i] = field[i - 1]
             // }
-            // console.log('%c123','color:yellow'); setValue(field)
+            // log('%c123','color:yellow'); setValue(field)
 
         }
         if (event.key === 'ArrowDown') {
@@ -354,7 +358,7 @@ export default (props) => {
     }
 
     const restart = () => {
-        console.log('restarting')
+        log('restarting')
         scoreTable.current.innerText = 'Score: 0'
         for (let row = -2; row < 20; row++) {
             arr[row] = [];
@@ -362,7 +366,7 @@ export default (props) => {
                 arr[row][col] = 0;
             }
         }
-        console.log('%c123', 'color:yellow');
+        log('%c123', 'color:yellow');
         setValue(arr)
         currentFigure = 0
         figurePos.reset()
@@ -388,9 +392,9 @@ export default (props) => {
                         <TetrisField cellSize={cellSize} onMount={onChildMount}>
 
                         </TetrisField>
-                        <button className='back-btn' onClick={close}>Back</button>
+                        <button className='back-btn' onClick={close}></button>
                         {gameOver.current ?
-                            <button className='restart-btn' onClick={restart}>Restart</button>
+                            <button className='restart-btn' onClick={restart}></button>
                             : null}
                     </div>
                 </div>}

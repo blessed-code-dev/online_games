@@ -1,9 +1,10 @@
 import React, {useRef, useState} from "react";
 import {Transition} from "react-transition-group";
 import SnakeField from "../SnakeField/SnakeField";
+import config from "../config.json";
 
 export default (props) => {
-    const devMode = false
+    const devMode = config.devMode
     const [toggle, setToggle] = useState(true)
     const [temp, rerender] = useState(true) //using this state only to rerender component
     const gameOver = useRef(false)
@@ -236,9 +237,9 @@ export default (props) => {
                         <SnakeField cellSize={cellSize} onMount={onChildMount}>
 
                         </SnakeField>
-                        <button className='back-btn' onClick={close}>Back</button>
+                        <button className='back-btn' onClick={close}></button>
                         {gameOver.current ?
-                            <button className='restart-btn' onClick={restart}>Restart</button>
+                            <button className='restart-btn' onClick={restart}></button>
                             : null}
                     </div>
                 </div>}
