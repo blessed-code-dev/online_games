@@ -233,7 +233,7 @@ export default (props) => {
             {state =>
                 <div className={`snake ${state}`}>
                     <div className={`snake-wrapper `} style={style}>
-                        <h1 style={{color: 'white', margin: 0}} ref={scoreTable}>Score: 0</h1>
+                        <h1 style={{color: 'white', margin: 0}} ref={scoreTable} className={'scoreText'}>Score: 0</h1>
                         <SnakeField cellSize={cellSize} onMount={onChildMount}>
 
                         </SnakeField>

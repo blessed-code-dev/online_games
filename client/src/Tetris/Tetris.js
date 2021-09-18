@@ -337,9 +337,9 @@ export default (props) => {
                         <TetrisField cellSize={cellSize} onMount={onChildMount}>
 
                         </TetrisField>
-                        <button className='back-btn' onClick={close}></button>
+                        <button className='back-btn' onClick={close}> </button>
                         {gameOver.current ?
-                            <button className='restart-btn' onClick={restart}></button>
+                            <button className='restart-btn' onClick={restart}> </button>
                             : null}
                     </div>
                 </div>}

@@ -42,18 +42,26 @@ export default (props) => {
                         if (value1 === 1) {
                             ctx.beginPath()
                             ctx.fillStyle = `rgb(158, 158, 158)`
+                            ctx.shadowColor = `rgb(158, 158, 158)`;
+                            ctx.shadowBlur = 15;
                             ctx.fillRect(col * cellSize-1, row * cellSize-1, cellSize+2, cellSize+2)
                             ctx.closePath()
                             ctx.stroke()
                         } else if (value1 === -1) {
                             ctx.beginPath()
                             ctx.fillStyle = `rgb(255, 255, 255)`
+                            ctx.shadowBlur = 15
+                            ctx.shadowColor = 'white';
                             ctx.arc((col+0.5) * cellSize, (row+0.5) * cellSize,cellSize/2,0,2*Math.PI)
                             ctx.closePath()
                             ctx.fill()
+                            ctx.stroke()
+
                         } else {
                             ctx.beginPath()
                             ctx.fillStyle = `rgb(255, 255, 255)`
+                            ctx.shadowColor = 'white';
+                            ctx.shadowBlur = 15;
                             ctx.fillRect(col * cellSize-1, row * cellSize-1, cellSize+2, cellSize+2)
                             ctx.closePath()
                             ctx.stroke()
