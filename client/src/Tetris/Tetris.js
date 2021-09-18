@@ -388,7 +388,7 @@ export default (props) => {
             {state =>
                 <div className={`tetris ${state}`}>
                     <div className='tetris-wrapper' style={style}>
-                        <h1 style={{color: 'white', margin: 0}} ref={scoreTable}>Score: 0</h1>
+                        <h1 style={{color: 'white', margin: 0}} ref={scoreTable} className={'scoreText'}>Score: 0</h1>
                         <TetrisField cellSize={cellSize} onMount={onChildMount}>
 
                         </TetrisField>

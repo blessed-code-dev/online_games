@@ -25,7 +25,7 @@ const Field = (props) => {
         ctx.moveTo(0, 2 * height / 3)
         ctx.lineTo(width, 2 * height / 3)
         ctx.shadowBlur = 10
-        ctx.shadowColor = 'red'
+        ctx.shadowColor = 'white'
         ctx.strokeStyle = '#ffffff'
         ctx.lineWidth = 3
         ctx.closePath()

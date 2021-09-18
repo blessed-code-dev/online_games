@@ -1,7 +1,7 @@
 body {
     margin: 0;
     overflow: hidden;
-    background-color: #5c7476;
+    background-color: #ffffff;
 }
 
 
@@ -9,14 +9,15 @@ body {
     height: 14vmax;
     width: 14vmax;
     border-radius: 2vmax;
-    box-shadow: 0 4px 43px 18px rgba(34, 60, 80, 0.43);
+    border: 20px black;
+    box-shadow: 0 4px 43px 9px rgb(186, 186, 186);
     transition: all .3s;
     position: relative;
 }
 
 
 .MenuItem:hover {
-    box-shadow: 0 4px 42px 38px rgba(34, 60, 80, 1);
+    box-shadow: 0 4px 42px 38px rgb(255, 255, 255);
     cursor: pointer;
     transform: scale(1.1);
 }
@@ -73,7 +74,7 @@ body {
     height: 100vh;
     align-items: center;
     position: relative;
-    background: radial-gradient(circle, rgba(30, 66, 92, 1) 0%, rgba(187, 187, 187, 1) 0%, rgba(80, 105, 122, 1) 46%, rgba(30, 66, 92, 1) 83%);
+    background:radial-gradient(circle, rgb(102, 112, 118) 0%, rgba(0,0,0,1) 100%);
     animation: 1000ms cubic-bezier(.12, .84, 0, .95) appear;
 }
 
@@ -100,7 +101,7 @@ body {
     width: 100vw;
     height: 100vh;
     animation: 700ms cubic-bezier(.12, .84, 0, .95) appear;
-    background: radial-gradient(circle, rgba(30, 66, 92, 1) 0%, rgba(90, 255, 142, 1) 0%, rgba(80, 105, 122, 1) 46%, rgba(30, 66, 92, 1) 83%);
+    background-color: black;
     overflow: hidden;
 
 }
@@ -138,7 +139,7 @@ body {
     font-size: 1.7rem;
     box-shadow: 0 0 10px 0 rgba(255, 255, 255, 0.6);
     background-image:    url("pics/266-2660273_expand-slideshow-white-back-icon-png.png");
-    background-size: contain;                      /* <------ */
+    background-size: 3vh;                      /* <------ */
     background-repeat:   no-repeat;
     background-position: center center;
     background-color: black;
@@ -180,4 +181,9 @@ body {
 
 .restart-btn:hover {
     box-shadow: 0 0 10px 0 rgb(255, 255, 255)
+}
+
+
+.scoreText{
+    font-family: trata, serif;
 }

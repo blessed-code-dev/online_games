@@ -15,7 +15,7 @@ export default (props) => {
         const ctx = canvas.getContext('2d')
 
 
-        for (let i = 0; i <= 20; i += 1) {
+        for (let i = 0; i <= 20; i += 20) {
             ctx.beginPath()
             ctx.moveTo(0, i * cellSize)
             ctx.lineTo(canvas.width - 10, i * cellSize)
@@ -27,7 +27,7 @@ export default (props) => {
             ctx.stroke()
         }
 
-        for (let i = 0; i <= 10; i += 1) {
+        for (let i = 0; i <= 10; i += 10) {
             ctx.beginPath()
             ctx.moveTo(i * cellSize, 0)
             ctx.lineTo(i * cellSize, canvas.height - 10)
@@ -46,7 +46,9 @@ export default (props) => {
                         // console.log(col, row)
                         ctx.beginPath()
                         ctx.fillStyle = `rgb(255, 255, 255)`
-                        ctx.fillRect(col * cellSize, row * cellSize, cellSize, cellSize)
+                        ctx.shadowColor = 'white';
+                        ctx.shadowBlur = 15;
+                        ctx.fillRect(col * cellSize-1, row * cellSize-1, cellSize+2, cellSize+2)
                         ctx.closePath()
                         ctx.stroke()
 
