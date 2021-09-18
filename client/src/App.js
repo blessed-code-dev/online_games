@@ -1,70 +1,64 @@
 import React, {useState} from "react";
-
+import {Transition} from "react-transition-group";
+import TicTacToe from "./TikTakToe/TicTacToe";
+import Tetris from "./Tetris/Tetris";
+import Snake from "./Snake/Snake";
+import './styles.css'
 
 function App() {
-    const divStyle = {
-        textAlign: 'center',
-        width:'100%'
-    }
+    const [layout, setLayout] = useState('Menu')
 
-    const handle = (title = 'default') => {
-        console.log('clicked on')
-        setTitle(title)
-        setVisible(!visible)
-    }
-    const [cars, setCars] = useState(
-        [
-            {name: 'car1', attr: 'what1?', vis: true},
-        {name: 'car2',  attr: 'what?2', vis: true},
-            {name: 'car3`', attr: 'what?3', vis: true}
-        ]
-    )
-
-    const [visible, setVisible] = useState(true)
-
-    const [title, setTitle] = useState('Top text')
-    console.log('rendered again')
-
-    function changeVis(index) {
-        const cars_temp = [...cars]
-        cars_temp[index].vis = !cars_temp[index].vis
-        setCars(cars_temp)
-        console.log(`vis at ${index} setted at ${cars_temp[index].vis}`)
-    }
-
-    function changeName(index, name) {
-        console.log(`changing at ${index} to ${name}`)
-        const cars_temp = [...cars]
-        cars_temp[index].name = name
-        setCars(cars_temp)
+    function back() {
+        setLayout('Menu')
     }
 
     return (
-        <div style={divStyle}>
-            <Counter></Counter>
-            <h2>{title}</h2>
-            {console.log('repainted')}
-            <input type="text" onChange={() => {
-                setVisible(!visible)
-                console.log(visible)
-            }}/>
-            <button onClick={handle.bind(this, 'lul')}>Press</button>
-            <div style={{width: 500, margin: "auto", paddingTop: 20, border: '20px,solid,    black'}}>
-                {visible ?
-                    cars.map((car, index) => {
-                        return car.vis ?
-                            <ErrorBoundary  key={index}>
-                                <Car name={car.name} attr={car.attr} onClick={handle} index={index} setVis={() => {
-                                    changeVis(index)
-                                }} onChangeName={(event) => {
-                                    changeName(index, event.target.value)
-                                }}> </Car> </ErrorBoundary>
-                                : null
-                                })
-                                : null}
-                            </div>
-                            </div>
-                    );
-                }
+        <div>
 
-                    export default App;
+            <Transition in={layout === 'Menu'} appear={true} timeout={{
+                appear: 1000,
+                enter: 1000,
+                exit: 690,
+            }}
+                        unmountOnExit
+                        onExited={() => {
+                            setLayout(layout.split(' ')[2])
+                        }}>
+                {state =>
+                    <div className={`MenuBlock ${state}`}>
+                        <div className={'MenuItem'} onClick={() => {
+                            setLayout('Switching to TicTacToe')
+
+                        }}/>
+                        <div className={'MenuItem'} onClick={() => {
+                            setLayout('Switching to Tetris')
+                        }}/>
+                        <div className={'MenuItem'} onClick={() => {
+                            setLayout('Switching to Snake')
+                        }}/>
+                    </div>}
+            </Transition>
+
+
+            {layout === 'TicTacToe' ?
+                <TicTacToe goBack={back}/>
+                : null
+            }
+
+            {layout === 'Tetris' ?
+                <Tetris goBack={back}/>
+                : null
+            }
+
+            {layout === 'Snake' ?
+                <Snake goBack={back}/>
+                : null
+            }
+
+        </div>
+
+
+    )
+}
+
+export default App;

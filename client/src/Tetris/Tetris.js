@@ -12,7 +12,6 @@ export default (props) => {
     let value = null;
     let setValue = null;
     let arr = []
-    let running = true
     let currentFigure = 0
     let figurePos = {
         x: 0,
@@ -44,7 +43,6 @@ export default (props) => {
                     arr[row][col] = 0;
                 }
             }
-            log('%c123', 'color:yellow');
             setValue(arr)
         }
     };
@@ -52,37 +50,20 @@ export default (props) => {
 
     const loopId = setInterval(() => {
         if (!gameOver.current) {
-            running = true
-            log('%cbegin tick                   ', 'background: green;')
-            log('now value is', value)
             tick()
-            // setTimeout(() => {
-            //     log('%cend of async tick', 'background: black;')
-            //     log('now value is', value)
-            // })
-            log('%cend tick', 'background: red;')
-            log('now value is', value)
-            running = false
 
         }
     }, 1000)
 
 
     function tick() {
-        // if (!running)
-        //     log('%c RUN ERROR!!', 'font-weight: bold; font-size: 50px;color: red; text-shadow: 3px 3px 0 rgb(217,31,38) , 6px 6px 0 rgb(226,91,14) , 9px 9px 0 rgb(245,221,8) , 12px 12px 0 rgb(5,148,68) , 15px 15px 0 rgb(2,135,206) , 18px 18px 0 rgb(4,77,145) , 21px 21px 0 rgb(42,21,113)');
-
         if (!childRendered)
             return false
-        if (!value) {
-            log('%c ERROR!!', 'font-weight: bold; font-size: 50px;color: red; text-shadow: 3px 3px 0 rgb(217,31,38) , 6px 6px 0 rgb(226,91,14) , 9px 9px 0 rgb(245,221,8) , 12px 12px 0 rgb(5,148,68) , 15px 15px 0 rgb(2,135,206) , 18px 18px 0 rgb(4,77,145) , 21px 21px 0 rgb(42,21,113)');
-        }
         if (!currentFigure) {
             currentFigure = figures[Math.trunc(Math.random() * figures.length)]
             addFigure()
-        } else {
+        } else
             moveDown()
-        }
 
 
     }
@@ -109,22 +90,9 @@ export default (props) => {
         figurePos.y = -2
         for (let i = 0; i < currentFigure.length; i++) {
             for (let j = 0; j < currentFigure[0].length; j++) {
-                // log(value)
-                // log(field,'  ',i,'  ',field[i],'?????')
-
-
                 if ((field[i - 2][start + j] === 0) && (currentFigure[i][j] === 1)) {
                     field[i - 2][start + j] = 2
                 }
-                // if ((field[i][start + j] === 1) && (currentFigure[i][j] === 1)) {
-                //     gameOver.current = true
-                //     log('game over')
-                //
-                //     clearInterval(loopId)
-                //     window.removeEventListener('keydown', keyPressHandler, false)
-                //     rerender(!temp)
-                //     return 0
-                // }
             }
         }
         log('%c123', 'color:yellow');
@@ -177,7 +145,6 @@ export default (props) => {
             if (field[-1].includes(1) || field[-2].includes(1)) {
                 gameOver.current = true
                 log('game over')
-
                 clearInterval(loopId)
                 window.removeEventListener('keydown', keyPressHandler, false)
                 rerender(!temp)
@@ -186,8 +153,6 @@ export default (props) => {
 
             setTimeout(tick)
         }
-
-        log('%c123', 'color:yellow');
         setValue(checkClear(field))
     }
 
@@ -231,8 +196,6 @@ export default (props) => {
     }
 
     const checkClear = (field) => {
-
-
         for (let row = 0; row < field.length; row++) {
             if (field[row].every(elem => elem === 1)) {
                 log('надо удалить ряд', row)
@@ -270,7 +233,6 @@ export default (props) => {
             }
         }
         currentFigure = tempFigure
-        log('%c123', 'color:yellow');
         setValue(field)
         return true
     }
@@ -285,10 +247,6 @@ export default (props) => {
     function MoveSide(Side) {
         if (!value || gameOver.current || !currentFigure || !childRendered)
             return false
-        if (!currentFigure)
-            log('%c MOVESIDE ERROR!!', 'font-weight: bold; font-size: 50px;color: red; text-shadow: 3px 3px 0 rgb(217,31,38) , 6px 6px 0 rgb(226,91,14) , 9px 9px 0 rgb(245,221,8) , 12px 12px 0 rgb(5,148,68) , 15px 15px 0 rgb(2,135,206) , 18px 18px 0 rgb(4,77,145) , 21px 21px 0 rgb(42,21,113)');
-        if (!childRendered)
-            log('%c MOVESIDE WHEN RENDER ERROR!!', 'font-weight: bold; font-size: 50px;color: red; text-shadow: 3px 3px 0 rgb(217,31,38) , 6px 6px 0 rgb(226,91,14) , 9px 9px 0 rgb(245,221,8) , 12px 12px 0 rgb(5,148,68) , 15px 15px 0 rgb(2,135,206) , 18px 18px 0 rgb(4,77,145) , 21px 21px 0 rgb(42,21,113)');
 
         const dir = Side === 'left' ? -1 : 1
         log('value сейчас', value)
@@ -312,7 +270,6 @@ export default (props) => {
                     }
                 }
                 figurePos.x--
-                log('%c123', 'color:yellow');
                 setValue(field)
                 break
             case 'right':
@@ -325,28 +282,18 @@ export default (props) => {
                     }
                 }
                 figurePos.x++
-                log('%c123', 'color:yellow');
                 setValue(field)
                 break
-
+            default:
         }
     }
 
     function keyPressHandler(event) {
-        if ((event.key === 'ArrowUp') && (currentFigure)) {
+        if ((event.key === 'ArrowUp') && (currentFigure))
             log('rotate', rotate())
-            // let field = JSON.parse(JSON.stringify(value))
-            // const index = 19
-            // for (let i = index; i > 0; i--) {
-            //     field[i] = field[i - 1]
-            // }
-            // log('%c123','color:yellow'); setValue(field)
-
-        }
         if (event.key === 'ArrowDown') {
             if (currentFigure && !gameOver.current && childRendered)
                 moveDown()
-
         }
         if (event.key === 'ArrowLeft') {
             MoveSide('left')
@@ -366,11 +313,9 @@ export default (props) => {
                 arr[row][col] = 0;
             }
         }
-        log('%c123', 'color:yellow');
         setValue(arr)
         currentFigure = 0
         figurePos.reset()
-
         gameOver.current = false
         window.removeEventListener('keydown', keyPressHandler, false)
         clearInterval(loopId)

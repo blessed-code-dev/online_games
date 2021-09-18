@@ -1,32 +1,16 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, { useRef, useState} from "react";
 import axios from "axios";
 import Field from "../Field/Field";
 import {Transition} from "react-transition-group";
 import config from '../config.json'
-//epilogue
-// Callbacks are defined to listen to events over time.
-// They`re declared and then they stick around, listening.
-// But there usually comes a time when they can stop listening.
-// And if they're not needed anymore, they should be cleaned up.
-// This is because keeping event listeners around isn't free.
-// It takes memory and some processing power from the browser and the host computer.
-
-// What makes this more important is that React components
-// will often be re-rendered, and the code to set up event
-// listeners will have the opportunity to run many times.
-// This can create errors by setting up multiple listeners
-// where we're actually expecting a single listener run per event occurrence.
 
 
 function TicTacToe(props) {
-    // log('new rerender',config.baseUri)
     const devMode = config.devMode
 
-    const canvasRef = useRef(null)
     const state = useRef(['', '', '', '', '', '', '', '', ''])
     const stage = useRef('turn')
-    const upperText = useRef('Your turn')
-    const [temp, rerender] = useState('')  //state just to rerender when we need
+    const [temp, rerender] = useState(true)  //state just to rerender when we need
     const botTurnPhrase = ['Hmmm', 'Let me think...', 'I`m thinking']
     const [toggle, setToggle] = useState(true)
 
@@ -35,22 +19,19 @@ function TicTacToe(props) {
             console.log(value)
     }
     function checkEnd() {
-        const b = [state.current.slice(0, 3), state.current.slice(3, 6), state.current.slice(6, 9)]
-        log(b)
-        if (!b.flat().includes('') && !b.flat().includes('?')) {
+        const field = [state.current.slice(0, 3), state.current.slice(3, 6), state.current.slice(6, 9)]
+        log(field)
+        if (!field.flat().includes('') && !field.flat().includes('?')) {
             stage.current = 'draw'
             return [-1, -1]
         }
-        // Checking for Rows for X or O victory.
         for (let row = 0; row < 3; row++) {
-            if (b[row][0] === b[row][1] && b[row][1] === b[row][2]) {
-                if (b[row][0] === 'x') {
+            if (field[row][0] === field[row][1] && field[row][1] === field[row][2]) {
+                if (field[row][0] === 'x') {
                     log('x won on ', row, 'row')
-                    // drawLine(row * 3, row * 3 + 2)
                     stage.current = 'end'
                     return [row * 3, row * 3 + 2]
-                } else if (b[row][0] === 'o') {
-                    // drawLine(row * 3, row * 3 + 2)
+                } else if (field[row][0] === 'o') {
                     stage.current = 'end'
                     log('0 won on ', row, 'row')
                     return [row * 3, row * 3 + 2]
@@ -58,17 +39,14 @@ function TicTacToe(props) {
             }
         }
 
-        // Checking for Columns for X or O victory.
         for (let col = 0; col < 3; col++) {
-            if (b[0][col] === b[1][col] && b[1][col] === b[2][col]) {
-                if (b[0][col] === 'x') {
+            if (field[0][col] === field[1][col] && field[1][col] === field[2][col]) {
+                if (field[0][col] === 'x') {
                     log('x won on ', col, 'col')
-                    // drawLine(col, col + 6)
                     stage.current = 'end'
                     return [col, col + 6]
 
-                } else if (b[0][col] === 'o') {
-                    // drawLine(col, col + 6)
+                } else if (field[0][col] === 'o') {
                     log('o won on ', col, 'col')
                     stage.current = 'end'
                     return [col, col + 6]
@@ -77,32 +55,28 @@ function TicTacToe(props) {
             }
         }
 
-        // Checking for Diagonals for X or O victory.
-        if (b[0][0] === b[1][1] && b[1][1] === b[2][2]) {
-            if (b[0][0] === 'x') {
+        if (field[0][0] === field[1][1] && field[1][1] === field[2][2]) {
+            if (field[0][0] === 'x') {
                 // drawLine(0, 8)
                 log('x won on main dia')
                 stage.current = 'end'
                 return [0, 8]
-            } else if (b[0][0] === 'o') {
-                // drawLine(0, 8)
+            } else if (field[0][0] === 'o') {
                 log('0 won on main dia')
                 stage.current = 'end'
                 return [0, 8]
 
             }
         }
-        if (b[0][2] === b[1][1] && b[1][1] === b[2][0]) {
+        if (field[0][2] === field[1][1] && field[1][1] === field[2][0]) {
 
-            if (b[0][2] === 'x') {
-                // drawLine(2, 6)
+            if (field[0][2] === 'x') {
                 log('x won on sec dia')
                 stage.current = 'end'
 
                 return [2, 6]
 
-            } else if (b[0][2] === 'o') {
-                // drawLine(2, 6)
+            } else if (field[0][2] === 'o') {
                 log('0 won on sec dia')
                 stage.current = 'end'
                 return [2, 6]
@@ -110,7 +84,6 @@ function TicTacToe(props) {
 
 
         }
-        log('return 0')
         return 0
     }
 
@@ -130,7 +103,6 @@ function TicTacToe(props) {
                     board: state.current.join('/')
                 }
             }).then(res => {
-                // log(res.data.myStep);
                 const botStep = res.data.myStep
                 state.current[botStep[0] + botStep[1] * 3] = 'x'
                 stage.current = 'turn'
@@ -142,7 +114,6 @@ function TicTacToe(props) {
 
     function Selected(index) {
         log('Select ', index)
-        let newState = JSON.parse(JSON.stringify(state))
         state.current = state.current.map(value => value === '?' ? '' : value).map(value => value === '' ? 'w' : value).map(value => value === 'w' ? '' : value)
         state.current[index] = '?'
         rerender(Math.random())
@@ -151,7 +122,6 @@ function TicTacToe(props) {
 
     function unpickAll() {
         log('Unpick All ')
-        let newState = JSON.parse(JSON.stringify(state))
         state.current = state.current.map(value => value === '?' ? '' : value).map(value => value === '' ? 'w' : value).map(value => value === 'w' ? '' : value)
         rerender(Math.random())
     }
@@ -190,7 +160,7 @@ function TicTacToe(props) {
                     }}>
                     </button>
                     {(stage.current === 'draw' || stage.current === 'end') ?
-                        <button className='restart-btn' onClick={restart}></button>
+                        <button className='restart-btn' onClick={restart}> </button>
                         : null}
                 </div>
             </div>}

@@ -36,7 +36,6 @@ export default (props) => {
 
     const tick = () => {
         moveSnake()
-        // checkEvents()
         log('tick')
         if (!gameOver.current)
             setTimeout(() => {
@@ -87,6 +86,7 @@ export default (props) => {
                     snake.headPos.y = 0
                 snake.currentDir = 'down'
                 break
+            default:
         }
 
 
@@ -146,7 +146,6 @@ export default (props) => {
     }
 
     function keyDownHandler(event) {
-        // log(event.key + ' DOWNED')
 
         switch (event.key) {
             case 'ArrowUp':
@@ -172,11 +171,12 @@ export default (props) => {
                     speedKf = 0.3
                 if (snake.currentDir !== 'left')
                     wantedDir = 'right'
-                break;
+                break
+            default:
         }
     }
 
-    function keyUpHandler(event) {
+    function keyUpHandler() {
         speedKf = 1
     }
 
@@ -237,9 +237,9 @@ export default (props) => {
                         <SnakeField cellSize={cellSize} onMount={onChildMount}>
 
                         </SnakeField>
-                        <button className='back-btn' onClick={close}></button>
+                        <button className='back-btn' onClick={close}> </button>
                         {gameOver.current ?
-                            <button className='restart-btn' onClick={restart}></button>
+                            <button className='restart-btn' onClick={restart}> </button>
                             : null}
                     </div>
                 </div>}

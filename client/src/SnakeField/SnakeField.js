@@ -7,7 +7,6 @@ export default (props) => {
     const canvasRef = useRef()
     useEffect(async () => {
         props.onMount([value, setValue]);
-        // console.log('using effect1', value)
 
         const cellSize = props.cellSize
         const canvas = canvasRef.current
@@ -20,8 +19,6 @@ export default (props) => {
             ctx.beginPath()
             ctx.moveTo(0, i * cellSize)
             ctx.lineTo(canvas.width - 10, i * cellSize)
-            // ctx.shadowBlur = 10
-            // ctx.shadowColor = 'red'
             ctx.strokeStyle = '#ffffff'
             ctx.lineWidth = 1
             ctx.closePath()
@@ -32,8 +29,6 @@ export default (props) => {
             ctx.beginPath()
             ctx.moveTo(i * cellSize, 0)
             ctx.lineTo(i * cellSize, canvas.height - 10)
-            // ctx.shadowBlur = 10
-            // ctx.shadowColor = 'red'
             ctx.strokeStyle = '#ffffff'
             ctx.lineWidth = 1
             ctx.closePath()
@@ -41,10 +36,9 @@ export default (props) => {
         }
 
         if (value[0])
-            value.map((value, row) => {
-                value.map((value1, col) => {
+            value.forEach((value, row) => {
+                value.forEach((value1, col) => {
                     if ((value1)) {
-                        // console.log(col, row)
                         if (value1 === 1) {
                             ctx.beginPath()
                             ctx.fillStyle = `rgb(158, 158, 158)`

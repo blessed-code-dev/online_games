@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import NewApp from './newApp'
+import App from './App'
 
 ReactDOM.render(
 
-    <NewApp>
-    </NewApp>,
+    <App>
+    </App>,
     document.getElementById('root')
 );
 
