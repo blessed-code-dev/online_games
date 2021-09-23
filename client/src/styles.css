@@ -83,7 +83,6 @@ body {
     width: 100vw;
     height: 100vh;
     animation: 700ms cubic-bezier(.12, .84, 0, .95) appear;
-    /*background: radial-gradient(circle, rgba(30,66,92,1) 0%, rgba(214,47,47,1) 0%, rgba(80,105,122,1) 46%, rgba(30,66,92,1) 83%);*/
     background-color: black;
     overflow: hidden;
 }
@@ -136,8 +135,8 @@ body {
     font-family: 'Orbitron', Verdana, sans-serif;
     font-size: 1.7rem;
     box-shadow: 0 0 10px 0 rgba(255, 255, 255, 0.6);
-    background-image: url("pics/266-2660273_expand-slideshow-white-back-icon-png.png");
-    background-size: 3vh; /* <------ */
+    background-image: url("pics/back_btn_pic.png");
+    background-size: 3vh;
     background-repeat: no-repeat;
     background-position: center center;
     background-color: black;
@@ -170,8 +169,8 @@ body {
     font-family: 'Orbitron', Verdana, sans-serif;
     font-size: 1.7rem;
     box-shadow: 0 0 10px 0 rgba(255, 255, 255, 0.6);
-    background-image: url("pics/—Pngtree—white refresh icon_4543883.png");
-    background-size: contain; /* <------ */
+    background-image: url("pics/restart_btn_pic.png");
+    background-size: contain;
     background-repeat: no-repeat;
     background-position: center center;
     background-color: black;
