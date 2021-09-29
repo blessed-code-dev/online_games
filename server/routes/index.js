@@ -8,7 +8,7 @@ router.get('/', function (req, res, next) {
     console.log("ip is", requestIp.getClientIp(req))
     let log_file = fs.createWriteStream(__dirname + '/debug.log', {flags: 'a'});
     let log_stdout = process.stdout;
-    const log = `Connected from ${requestIp.getClientIp(req)} at ${new Date()}`
+    const log = `Connected from ${requestIp.getClientIp(req)} at ${new Date().toLocaleString("en-US", {timeZone: "Europe/Moscow",hour12:false})}`
     log_file.write(util.format(log) + '\n');
     log_stdout.write(util.format(log) + '\n');
     next()
