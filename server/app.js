@@ -30,12 +30,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 // app.use('/', indexRouter);
 // app.use('/users', usersRouter);
 app.use('/field_api', indexRouter);
-app.use('/privacy_policy', privacy);
 
 // if (process.env.NODE_ENV==='production'){
 //     app.use('/',express.static(path.join(__dirname,'../client','build')))
 // }
 app.use('/',express.static(path.join(__dirname,'../client','build')))
+app.use('/privacy_policy', privacy);
 
 
 // catch 404 and forward to error handler

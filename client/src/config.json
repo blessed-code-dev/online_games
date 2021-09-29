@@ -1,4 +1,4 @@
 {
-  "baseUri": "http://localhost/",
+  "baseUri": "http://localhost:5000/",
   "devMode": false
 }
