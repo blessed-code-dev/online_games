@@ -5,7 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require('cors')
 var fieldRouter = require('./routes/field_api');
-var tetrisScore = require('./routes/tetris_score');
+var snakeScore = require('./routes/snake_score');
 var index = require('./routes/index');
 var privacy = require('./routes/privacy');
 var logsRouter = require('./routes/logs');
@@ -33,7 +33,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index)
 app.use('/', express.static(path.join(__dirname, '../client', 'build')))
 app.use('/field_api', fieldRouter);
-app.use('/tetris_score', tetrisScore);
+app.use('/snake_score', snakeScore);
 app.use('/privacy_policy', privacy);
 app.use('/get_logs',logsRouter);
 

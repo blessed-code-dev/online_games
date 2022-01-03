@@ -143,7 +143,7 @@ export default (props) => {
 
 		axios({
 			method: 'POST',
-			url: `${config.baseUri}tetris_score`,
+			url: `${config.baseUri}snake_score`,
 			headers: {
 				score:Number(scoreTable.current.innerText.split(' ')[1])
 			}
