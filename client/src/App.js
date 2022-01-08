@@ -4,6 +4,7 @@ import TicTacToe from "./TikTakToe/TicTacToe";
 import Tetris from "./Tetris/Tetris";
 import Snake from "./Snake/Snake";
 import './styles.css'
+import './score-popup.css'
 
 function App() {
     const [layout, setLayout] = useState('Menu')

@@ -1,8 +1,8 @@
 import React, {useRef, useState} from "react";
 import {Transition} from "react-transition-group";
 import SnakeField from "../SnakeField/SnakeField";
+import Popup from "../popup/Popup";
 import config from "../config.json";
-import axios from "axios";
 
 export default (props) => {
 	const devMode = config.devMode
@@ -15,15 +15,20 @@ export default (props) => {
 	const fieldHeight = 20
 	let value = null;
 	let setValue = null;
+
+
+
+
+
 	let speedKf = 1
 	setTimeout(() => {
 		if (!gameOver.current)
 			tick()
 	}, 100)
 
-	const log = (value) => {
+	const log = (value, q, w, e, r, t, y) => {
 		if (devMode)
-			console.log(value)
+			console.log(value, q, w, e, r, t, y)
 	}
 
 	const snake = {
@@ -40,12 +45,12 @@ export default (props) => {
 		log('tick')
 		if (!gameOver.current)
 			setTimeout(() => {
-
 				tick()
 			}, 100 * speedKf)
 	}
 
 	const moveSnake = () => {
+		log('moveSnake')
 		const field = getValue()
 		let randX
 		let randY
@@ -97,7 +102,7 @@ export default (props) => {
 
 		if (field[snake.headPos.y][snake.headPos.x] === -1) {
 			field[snake.headPos.y][snake.headPos.x] = 0
-			snake.length = snake.length + 10
+			snake.length = snake.length + 2
 			scoreTable.current.innerText = 'Score: ' + (Number(scoreTable.current.innerText.split(' ')[1]) + 2)
 			do {
 				randX = Math.trunc(Math.random() * fieldWidth)
@@ -113,6 +118,7 @@ export default (props) => {
 	}
 
 	const onChildMount = (dataFromChild) => {
+		log('onchildMount')
 		value = dataFromChild[0]
 		setValue = dataFromChild[1]
 		if (!value)
@@ -141,15 +147,8 @@ export default (props) => {
 	function endGame() {
 		log('GG')
 
-		axios({
-			method: 'POST',
-			url: `${config.baseUri}snake_score`,
-			headers: {
-				score:Number(scoreTable.current.innerText.split(' ')[1])
-			}
-		}).then(res => {
-			console.log(res)
-		})
+
+
 
 		gameOver.current = true
 		window.removeEventListener('keydown', keyDownHandler, false)
@@ -198,6 +197,7 @@ export default (props) => {
 
 
 	function restart() {
+		console.log('restart')
 
 		scoreTable.current.innerText = 'Score: 0'
 		window.removeEventListener('keydown', keyDownHandler, false)
@@ -205,9 +205,11 @@ export default (props) => {
 		setValue(0)
 		gameOver.current = false
 		rerender(!temp)
+		console.log('temp is ', temp)
 	}
 
 	const initStart = () => {
+		log('initStart')
 		const arr = []
 		let randX
 		let randY
@@ -233,10 +235,19 @@ export default (props) => {
 	}
 
 	const close = () => {
+		log('close')
+		gameOver.current = true
 		window.removeEventListener('keydown', keyDownHandler, false)
 		window.removeEventListener('keyup', keyUpHandler, false)
 		setToggle(!toggle)
 	}
+	let popupProps = {
+		restart: restart,
+		exit: close,
+		score: gameOver.current && Number(scoreTable.current.innerText.split(' ')[1]),
+		from: "snake"
+	}
+
 
 	return (
 		<Transition in={toggle} timeout={690} unmountOnExit onExited={() => {
@@ -251,9 +262,9 @@ export default (props) => {
 						<SnakeField cellSize={cellSize} onMount={onChildMount}>
 
 						</SnakeField>
-						<button className='back-btn' onClick={close}></button>
+						<button className='back-btn' onClick={close}> </button>
 						{gameOver.current ?
-							<button className='restart-btn' onClick={restart}></button>
+							<Popup args={popupProps}> </Popup>
 							: null}
 					</div>
 				</div>}

@@ -2,6 +2,7 @@ import React, {useRef, useState} from "react";
 import TetrisField from "../TetrisField/TetrisField";
 import {Transition} from "react-transition-group";
 import config from "../config.json";
+import Popup from "../popup/Popup";
 
 export default (props) => {
     const [toggle, setToggle] = useState(true)
@@ -323,6 +324,12 @@ export default (props) => {
     }
     window.addEventListener('keydown', keyPressHandler, false)
 
+    let popupProps = {
+        restart: restart,
+        exit: close,
+        score: gameOver.current && Number(scoreTable.current.innerText.split(' ')[1]),
+        from: "tetris"
+    }
 
     return (
         <Transition in={toggle} timeout={690} unmountOnExit onExited={() => {
@@ -338,8 +345,9 @@ export default (props) => {
 
                         </TetrisField>
                         <button className='back-btn' onClick={close}> </button>
+
                         {gameOver.current ?
-                            <button className='restart-btn' onClick={restart}> </button>
+                            <Popup args={popupProps}> </Popup>
                             : null}
                     </div>
                 </div>}

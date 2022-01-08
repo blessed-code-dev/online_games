@@ -1,0 +1,89 @@
+.global-layer {
+    top: 0;
+    left: 0;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: rgb(0, 0, 0);
+    opacity: 70%;
+    animation: layer-animation 1s;
+}
+
+.popup {
+    border-radius: 15px;
+    width: 600px;
+    position: absolute;
+    top: 200px;
+    left: calc(50% - 300px);
+    background-color: #000000;
+    box-shadow: 0 0 100px 0 rgba(255, 255, 255, 0.6);
+    animation: popup-animation 1s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+}
+
+@keyframes popup-animation {
+    0% {
+        top: -50%;
+    }
+    100% {
+        top: 200px;
+    }
+}
+
+@keyframes layer-animation {
+    0% {
+        opacity: 0%
+    }
+    100% {
+        opacity: 70%;
+    }
+}
+
+
+.popup h1,
+.popup h2 {
+    color: #FFFFFF;
+    text-align: center;
+    margin: 20px 0 0 0;
+}
+
+.popup .save-btn {
+    width: 200px;
+    height: 70px;
+    box-shadow: 0 0 10px 0 rgba(255, 255, 255, 0.6);
+    background-color: black;
+    color: #FFFFFF;
+    font-size: 20px;
+}
+
+.popup .save-btn:hover {
+    box-shadow: 0 0 10px 0 rgb(255, 255, 255)
+}
+
+.popup .controls {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-around;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.popup .controls *{
+    margin: 0;
+}
+
+.popup label{
+    margin: 50px 50px 20px ;
+    color: #FFFFFF;
+    font-size: 30px;
+}
+
+.popup input {
+    margin-left: 30px;
+    height: 30px;
+    font-size: 20px;
+}

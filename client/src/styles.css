@@ -130,8 +130,8 @@ body {
 
 .back-btn {
     margin-top: 10px;
-    width: 30%;
-    height: 7vh;
+    width: 100px;
+    height: 50px;
     font-family: 'Orbitron', Verdana, sans-serif;
     font-size: 1.7rem;
     box-shadow: 0 0 10px 0 rgba(255, 255, 255, 0.6);
@@ -164,8 +164,8 @@ body {
 
 .restart-btn {
     margin-left: 20px;
-    width: 30%;
-    height: 7vh;
+    width: 100px;
+    height: 50px;
     font-family: 'Orbitron', Verdana, sans-serif;
     font-size: 1.7rem;
     box-shadow: 0 0 10px 0 rgba(255, 255, 255, 0.6);
