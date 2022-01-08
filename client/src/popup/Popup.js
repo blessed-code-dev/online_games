@@ -44,7 +44,7 @@ const Popup = (props) => {
 
 	return (
 		<>
-			<div className={'global-layer'}></div>
+			<div className={'global-layer'}> </div>
 			<div className={'popup'}>
 				<h1>Your score: {props.args.score}</h1>
 				<h2> Your position in scoreboard is {pos}</h2>
