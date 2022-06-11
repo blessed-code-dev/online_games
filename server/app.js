@@ -32,6 +32,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index)
 app.use('/', express.static(path.join(__dirname, '../client', 'build')))
+app.use('/', express.static(path.join(__dirname, '../../dist/untitled')))
+app.use('/test', express.static(path.join(__dirname, '../../dist/untitled')))
+
+
 app.use('/field_api', fieldRouter);
 app.use('/score', score);
 app.use('/privacy_policy', privacy);
